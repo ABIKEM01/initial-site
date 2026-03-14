@@ -4,15 +4,21 @@
   <h2>Service Projects</h2>
 
   <ul class="project-list">
-    <li>Park Cleanup Initiative</li>
-    <li>Community Tutoring Program</li>
-    <li>Neighborhood Food Drive</li>
-    <li>Health Awareness Campaign</li>
-    <li>Observer Tutoring Program</li>
-    <li>Tailor made Food Drive</li>
-    <li>Award Creation and Awareness Campaign</li>
-    <li>Public Egagement</li>
+
+    <% projects.forEach(project => { %>
+
+      <li>
+        <strong>
+          <%= new Date(project.date).toLocaleDateString() %>
+        </strong>:
+        <%= project.title %>
+        (<%= project.organization_name %>)
+      </li>
+
+    <% }) %>
+
   </ul>
+
 </main>
 
 <%- include("partials/footer") %>
