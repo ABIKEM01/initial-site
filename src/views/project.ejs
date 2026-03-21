@@ -17,6 +17,18 @@
   <p>
     <a href="/projects">← Back to Projects</a>
   </p>
+
+  <h3>Categories</h3>
+
+<ul class="category-tags">
+  <% categories.forEach(category => { %>
+    <li>
+      <a href="/category/<%= category.category_id %>">
+        <%= category.name %>
+      </a>
+    </li>
+  <% }) %>
+</ul>
 </main>
 
 <%- include("partials/footer") %>

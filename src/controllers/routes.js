@@ -3,7 +3,7 @@ import express from 'express';
 import { showHomePage } from './index.js';
 import { showOrganizationsPage } from './organizations.js';
 import { showProjectsPage ,showProjectDetailsPage} from './projects.js';
-import { showCategoriesPage } from './categories.js';
+import { showCategoriesPage, showCategoryDetailsPage } from './categories.js';
 import { testErrorPage } from './errors.js';
 import { showOrganizationDetailsPage } from './organizations.js';
 
@@ -16,6 +16,7 @@ router.get('/categories', showCategoriesPage);
 // Route for  details page
 router.get('/organization/:id', showOrganizationDetailsPage);
 router.get('/project/:id', showProjectDetailsPage);
+router.get('/category/:id', showCategoryDetailsPage);
 // error-handling routes
 router.get('/test-error', testErrorPage);
 
