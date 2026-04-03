@@ -31,8 +31,10 @@
 </ul>
 
 </main>
+<% if (user && user.role_name === 'admin') { %>
 <a href="/assign-categories/<%= project.project_id %>">Edit Categories</a>
 <p>
   <a href="/edit-project/<%= project.project_id %>">Edit Project</a>
 </p>
+<% } %>
 <%- include("partials/footer") %>
