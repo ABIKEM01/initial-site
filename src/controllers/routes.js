@@ -11,7 +11,7 @@ import { showCategoriesPage, showCategoryDetailsPage,showAssignCategoriesForm, p
   categoryValidation } from './categories.js';
 import { testErrorPage } from './errors.js';
 import { showOrganizationDetailsPage, showNewOrganizationForm,processNewOrganizationForm, organizationValidation ,showEditOrganizationForm,processEditOrganizationForm} from './organizations.js';
-import {showUserRegistrationForm, processUserRegistrationForm,showLoginForm, processLoginForm, processLogout ,requireLogin, showDashboard,requireRole} from './users.js';
+import {showUserRegistrationForm, processUserRegistrationForm,showLoginForm, processLoginForm, processLogout ,requireLogin, showDashboard,requireRole,showUsersPage} from './users.js';
 
 
 const router = express.Router();
@@ -35,6 +35,7 @@ router.post('/login', processLoginForm);
 router.get('/logout', processLogout);
 // Protected dashboard route
 router.get('/dashboard', requireLogin, showDashboard);
+router.get('/users', requireRole('admin'), showUsersPage);
 
 // Route to handle new project form submission
 router.post('/new-project',requireRole('admin'), projectValidation,processNewProjectForm);
