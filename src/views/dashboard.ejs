@@ -13,6 +13,25 @@
         </p>
     <% } %>
 
+    <h2>Your Volunteer Projects</h2>
+
+<ul>
+  <% if (projects.length === 0) { %>
+    <li>No projects yet.</li>
+  <% } %>
+
+  <% projects.forEach(project => { %>
+    <li>
+      <%= project.title %> 
+      (<%= new Date(project.date).toLocaleDateString() %>)
+
+      <form method="POST" action="/project/<%= project.project_id %>/unvolunteer" style="display:inline;">
+        <button type="submit">Remove</button>
+      </form>
+    </li>
+  <% }) %>
+</ul>
+
 </main>
 
 <%- include('partials/footer') %>

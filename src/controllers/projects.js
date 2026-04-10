@@ -2,7 +2,9 @@
 import { getAllProjects, } from '../models/projects.js';
 import { 
   getUpcomingProjects, 
-  getProjectDetails ,createProject,updateProject
+  getProjectDetails ,createProject,updateProject, addVolunteer,
+  removeVolunteer,
+  isUserVolunteer,
 } from '../models/projects.js';
 
  import { getCategoriesByProjectId } from '../models/categories.js';
@@ -56,18 +58,38 @@ const showProjectsPage = async (req, res) => {
 //   });
 // };
 
+// const showProjectDetailsPage = async (req, res) => {
+//     const projectId = req.params.id;
+
+//     const project = await getProjectDetails(projectId);
+//     const categories = await getCategoriesByProjectId(projectId);
+
+//     const title = 'Project Details';
+
+//     res.render('project', {
+//         title,
+//         project,
+//         categories
+//     });
+// };
+
 const showProjectDetailsPage = async (req, res) => {
     const projectId = req.params.id;
 
     const project = await getProjectDetails(projectId);
     const categories = await getCategoriesByProjectId(projectId);
 
-    const title = 'Project Details';
+    let isVolunteer = false;
+
+    if (req.session.user) {
+        isVolunteer = await isUserVolunteer(req.session.user.user_id, projectId);
+    }
 
     res.render('project', {
-        title,
+        title: 'Project Details',
         project,
-        categories
+        categories,
+        isVolunteer
     });
 };
 
@@ -146,5 +168,28 @@ const processEditProjectForm = async (req, res) => {
     res.redirect('/edit-project/' + projectId);
   }
 };
+
+
+
+const volunteerForProject = async (req, res) => {
+  const userId = req.session.user.user_id;
+  const projectId = req.params.id;
+
+  await addVolunteer(userId, projectId);
+
+  req.flash('success', 'You are now a volunteer!');
+  res.redirect(`/project/${projectId}`);
+};
+
+const unvolunteerForProject = async (req, res) => {
+  const userId = req.session.user.user_id;
+  const projectId = req.params.id;
+
+  await removeVolunteer(userId, projectId);
+
+  req.flash('success', 'You have been removed as a volunteer.');
+  res.redirect(`/project/${projectId}`);
+};
 // Export any controller functions
-export { showProjectsPage ,showProjectDetailsPage, showNewProjectForm, processNewProjectForm, projectValidation, showEditProjectForm, processEditProjectForm };
+export { showProjectsPage ,showProjectDetailsPage, showNewProjectForm, processNewProjectForm, projectValidation, showEditProjectForm, processEditProjectForm, volunteerForProject,
+  unvolunteerForProject };

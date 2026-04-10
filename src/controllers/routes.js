@@ -3,7 +3,8 @@ import express from 'express';
 import { showHomePage } from './index.js';
 import { showOrganizationsPage } from './organizations.js';
 import { showProjectsPage ,showProjectDetailsPage,showNewProjectForm, processNewProjectForm,projectValidation, showEditProjectForm,
-  processEditProjectForm } from './projects.js';
+  processEditProjectForm,  volunteerForProject,
+  unvolunteerForProject } from './projects.js';
 import { showCategoriesPage, showCategoryDetailsPage,showAssignCategoriesForm, processAssignCategoriesForm, showNewCategoryForm,
   processNewCategoryForm,
   showEditCategoryForm,
@@ -36,6 +37,10 @@ router.get('/logout', processLogout);
 // Protected dashboard route
 router.get('/dashboard', requireLogin, showDashboard);
 router.get('/users', requireRole('admin'), showUsersPage);
+
+// Routes for volunteering
+router.post('/project/:id/volunteer', requireLogin, volunteerForProject);
+router.post('/project/:id/unvolunteer', requireLogin, unvolunteerForProject);
 
 // Route to handle new project form submission
 router.post('/new-project',requireRole('admin'), projectValidation,processNewProjectForm);

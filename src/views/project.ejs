@@ -30,6 +30,18 @@
   <% }) %>
 </ul>
 
+<% if (isLoggedIn) { %>
+  <% if (isVolunteer) { %>
+    <p>You are volunteering for this project.</p>
+    <form method="POST" action="/project/<%= project.project_id %>/unvolunteer">
+      <button type="submit">Remove Volunteer</button>
+    </form>
+  <% } else { %>
+    <form method="POST" action="/project/<%= project.project_id %>/volunteer">
+      <button type="submit">Volunteer</button>
+    </form>
+  <% } %>
+<% } %>
 </main>
 <% if (user && user.role_name === 'admin') { %>
 <a href="/assign-categories/<%= project.project_id %>">Edit Categories</a>
@@ -37,4 +49,7 @@
   <a href="/edit-project/<%= project.project_id %>">Edit Project</a>
 </p>
 <% } %>
+
+
+
 <%- include("partials/footer") %>
