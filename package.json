@@ -5,8 +5,8 @@
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "nodemon",
-    "start": "node server.js"
+    "dev": "node init && nodemon",
+    "start": "node init && node server.js"
   },
   "author": "Abiodun Babayode",
   "license": "ISC",
